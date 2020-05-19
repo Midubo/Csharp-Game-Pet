@@ -1,0 +1,10 @@
+D:\Nothing\VS 2019\WindowsForms\Pet\bin\Debug\Pet.exe
+D:\Nothing\VS 2019\WindowsForms\Pet\bin\Debug\Pet.pdb
+D:\Nothing\VS 2019\WindowsForms\Pet\obj\Debug\Pet.csprojAssemblyReference.cache
+D:\Nothing\VS 2019\WindowsForms\Pet\obj\Debug\Pet.Form1.resources
+D:\Nothing\VS 2019\WindowsForms\Pet\obj\Debug\Pet.Properties.Resources.resources
+D:\Nothing\VS 2019\WindowsForms\Pet\obj\Debug\Pet.csproj.GenerateResource.cache
+D:\Nothing\VS 2019\WindowsForms\Pet\obj\Debug\Pet.csproj.CoreCompileInputs.cache
+D:\Nothing\VS 2019\WindowsForms\Pet\obj\Debug\Pet.exe
+D:\Nothing\VS 2019\WindowsForms\Pet\obj\Debug\Pet.pdb
+D:\Nothing\VS 2019\WindowsForms\Pet\bin\Debug\Pet.exe.config
