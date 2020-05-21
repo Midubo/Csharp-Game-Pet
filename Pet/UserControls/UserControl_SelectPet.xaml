@@ -1,0 +1,289 @@
+﻿<UserControl x:Class="Pet.UserControl_SelectPet"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Pet"
+             mc:Ignorable="d"
+             Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+
+        <Style TargetType="{x:Type RadioButton}" >
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <BulletDecorator Cursor="Hand">
+                            <!-- Text element -->
+                            <Border Height="20" CornerRadius="3" BorderBrush="#FFE2E2E2" BorderThickness="1">
+                                <Grid>
+                                    <ContentPresenter VerticalAlignment="Center" Margin="20 0" />
+
+                                    <!-- Because our border is the switching element, we don't need a bullet -->
+                                    <Border Width="10" Margin="5,0,48,0" Background="#FFCDCDCD" CornerRadius="1" Name="RadioMark" HorizontalAlignment="Left"/>
+                                </Grid>
+
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="White" Offset="0"/>
+                                        <GradientStop Color="#FFE2E2E2" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+
+                            </Border>
+
+                        </BulletDecorator>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter TargetName="RadioMark" Property="Background" Value="DodgerBlue"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="RadioMark" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="StackPanelStyle" TargetType="{x:Type StackPanel}">
+            <Setter Property="Margin" Value="10,0" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition ></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="#FF00B5C5" BorderThickness="2" CornerRadius="2" Background="LightGreen" Margin="1">
+            <StackPanel Margin="10 5">
+                <TextBlock Text="CHOOSE A PET" HorizontalAlignment="Center" FontWeight="Bold" Width="auto"/>
+            </StackPanel>
+        </Border>
+
+        <Grid Name="PropertiesBox" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <TextBlock Name="tblc_IntroGoal" TextWrapping="Wrap" Margin="5 0 0 0">
+                    • Make your pet 100% happy (♥) in a given period of time.<LineBreak/>
+                    • Hunger raises by 1 every day and decreases ♥.<LineBreak/>
+                    • You get $1 and 1 free hour every day.</TextBlock>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Name="btn_AddWin" Grid.Column="0" Click="AddWin_Click" Visibility="Collapsed">Add win</Button>
+
+                    <TextBlock Name="tblc_Intro" Grid.Column="1" Margin="5 0 5 0" HorizontalAlignment="Right" VerticalAlignment="Center">You won {0} times.</TextBlock>
+
+                    <Button Grid.Column="2" Name="btn_Erase" Click="btn_Erase_Click" ToolTip="Erase your results" HorizontalAlignment="Left">
+                        <Image Source="pack://application:,,,/Images/delete.png" Width="20" Height="20" Stretch="Fill" RenderOptions.EdgeMode="Aliased"/>
+                    </Button>
+
+                </Grid>
+
+            </StackPanel>
+
+            <GroupBox Grid.Row="1">
+
+                <GroupBox.Header>
+                    <Border Grid.Row="0" BorderBrush="#FF00B5C5" BorderThickness="2" CornerRadius="2" Background="Gold" Margin="1">
+                        <StackPanel Margin="10 5">
+                            <TextBlock Text="PET" HorizontalAlignment="Center" FontWeight="Bold" Width="auto"/>
+                        </StackPanel>
+                    </Border>
+                </GroupBox.Header>
+
+                <WrapPanel>
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <Border BorderThickness="1" BorderBrush="#FF000000">
+                            <Image Source="pack://application:,,,/Images/puppy.png"></Image>
+                        </Border>
+
+                        <RadioButton Name="choiceA" Foreground="DarkGoldenrod" IsChecked="True" GroupName="Pet">
+                            <RadioButton.Content>
+                                <TextBlock Name="textBlock_choiceA" TextAlignment="Justify">
+                                    Puppy
+                                </TextBlock>
+                            </RadioButton.Content>
+                        </RadioButton>
+
+                        <TextBlock>No effect</TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Name="stackPanel_Kitty" Style="{StaticResource StackPanelStyle}" IsEnabled="False">
+                        <Border BorderThickness="1" BorderBrush="#FF000000">
+                            <Image Source="pack://application:,,,/Images/kitten.png"></Image>
+                        </Border>
+
+                        <RadioButton Name="choiceB" Foreground="Orange" GroupName="Pet">
+                            <RadioButton.Content>
+                                <TextBlock Name="textBlock_choiceB" TextAlignment="Justify">
+                                    Kitty
+                                </TextBlock>
+                            </RadioButton.Content>
+                        </RadioButton>
+
+                        <TextBlock>
+                            <Run Foreground="LawnGreen" FontWeight="Bold">+1 Day</Run>
+                            <LineBreak/>
+                            [5 wins]
+                        </TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Name="stackPanel_Parrot" Style="{StaticResource StackPanelStyle}" IsEnabled="False">
+                        <Border BorderThickness="1" BorderBrush="#FF000000">
+                            <Image Source="pack://application:,,,/Images/parrot.png"></Image>
+                        </Border>
+
+                        <RadioButton Name="choiceC" Foreground="YellowGreen" GroupName="Pet">
+                            <RadioButton.Content>
+                                <TextBlock Name="textBlock_choiceC" TextAlignment="Justify">
+                                    Parrot
+                                </TextBlock>
+                            </RadioButton.Content>
+                        </RadioButton>
+
+                        <TextBlock>
+                            <Run Foreground="LawnGreen" FontWeight="Bold">hunger 50% weaker</Run>
+                            <LineBreak/>
+                            [10 wins]
+                        </TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Name="stackPanel_Hamster" Style="{StaticResource StackPanelStyle}" IsEnabled="False">
+                        <Border BorderThickness="1" BorderBrush="#FF000000">
+                            <Image Source="pack://application:,,,/Images/hamster.png"></Image>
+                        </Border>
+
+                        <RadioButton Name="choiceD" Foreground="PaleVioletRed" GroupName="Pet">
+                            <RadioButton.Content>
+                                <TextBlock Name="textBlock_choiceD" TextAlignment="Justify">
+                                    Hamster
+                                </TextBlock>
+                            </RadioButton.Content>
+                        </RadioButton>
+
+                        <TextBlock>
+                            <Run Foreground="LawnGreen" FontWeight="Bold">+10 ♥</Run>
+                            <LineBreak/>
+                            <Run Foreground="Tomato" FontWeight="Bold">-1 Day</Run>
+                            <LineBreak/>
+                            [15 wins]
+                        </TextBlock>
+
+                    </StackPanel>
+
+                    <StackPanel Name="stackPanel_Panda" Style="{StaticResource StackPanelStyle}" IsEnabled="False">
+                        <Border BorderThickness="1" BorderBrush="#FF000000">
+                            <Image Source="pack://application:,,,/Images/panda.png"></Image>
+                        </Border>
+
+                        <RadioButton Name="choicePanda" GroupName="Pet">
+                            <RadioButton.Content>
+                                <TextBlock Name="textBlock_choicePanda" TextAlignment="Justify">
+                                    Panda
+                                </TextBlock>
+                            </RadioButton.Content>
+                        </RadioButton>
+
+                        <TextBlock>
+                            <Run Foreground="LawnGreen" FontWeight="Bold">+1 ♥ every day</Run>
+                            <LineBreak/>
+                            [20 wins]
+                        </TextBlock>
+
+                    </StackPanel>
+                </WrapPanel>
+
+            </GroupBox>
+
+            <GroupBox Grid.Row="2" Margin="0 0 500 0">
+                <GroupBox.Header>
+                    <Border BorderBrush="#FF00B5C5" BorderThickness="2" CornerRadius="2" Background="Gold" Margin="1">
+                        <StackPanel Margin="10 5">
+                            <TextBlock Text="AGE" HorizontalAlignment="Center" FontWeight="Bold" Width="auto"/>
+                        </StackPanel>
+                    </Border>
+                </GroupBox.Header>
+
+                <StackPanel>
+                    <RadioButton Name="AgeChoice1" IsChecked="True">1 month (+1 Day, +1% hunger)</RadioButton>
+                    <RadioButton Name="AgeChoice2" IsEnabled="False">6 months (no effect)</RadioButton>
+                    <RadioButton Name="AgeChoice3" IsEnabled="False">12 months (+1% ♥, -1 Day)</RadioButton>
+                    <TextBlock Name="tblc_Effect" TextAlignment="Center">Effect: +1 Day, +1% hunger</TextBlock>
+                </StackPanel>
+            </GroupBox>
+
+            <Grid Grid.Row="3">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Name="tblc_Name">Enter your pet's name:</TextBlock>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0" Name="tb_Name">Rex</TextBox>
+                    <TextBlock Grid.Column="1" Name="tblc_WarningName" Foreground="Red" Visibility="Hidden">Enter the name!</TextBlock>
+
+                </Grid>
+
+                <Grid Grid.Row="2">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Row="0" Name="btn_Start" Click="BtnStart_Click" Width="200" ToolTip="Start">✔</Button>
+
+                    <Button Grid.Row="1" Name="btn_Restart" Click="btn_Restart_Click" ToolTip="Default settings" Width="200" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Source="pack://application:,,,/Images/reload.png" Width="20" Height="20" Stretch="Fill" RenderOptions.EdgeMode="Aliased"/>
+
+                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5 0">Restore</TextBlock>
+                        </Grid>
+                    </Button>
+
+                    <Button Grid.Row="2" Name="btn_MainMenu" Click="btn_MainMenu_Click" Width="200">Main Menu</Button>
+
+                    <Button Grid.Row="3" Name="btn_Exit" Click="btn_Exit_Click" ToolTip="Exit the game" Width="200">
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5 0">Exit Game</TextBlock>
+                    </Button>
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>
