@@ -4,9 +4,207 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Pet"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             Background="GhostWhite"
+             Loaded="UserControl_Loaded"
+             >
+
+    <UserControl.Resources>
+
+        <Style TargetType="{x:Type RadioButton}">
+            <Setter Property="VerticalAlignment" Value="center"/>
+        </Style>
+
+        <Style TargetType="{x:Type Image}">
+            <Setter Property="Stretch" Value="None"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="VerticalAlignment" Value="center"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style x:Key="StackPanelStyle" TargetType="{x:Type StackPanel}">
+
+            <Setter Property="Margin" Value="10,0"/>
+
+        </Style>
+
+    </UserControl.Resources>
+
     <Grid>
-            
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+
+        </Grid.RowDefinitions>
+
+        <ToolBarTray Grid.Row="0" VerticalAlignment="Center" IsLocked="True">
+            <ToolBarTray.Resources>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="Stretch" Value="Fill"/>
+                </Style>
+            </ToolBarTray.Resources>
+
+            <ToolBar>
+                <Button Name="btn_Restart" Click="btn_Restart_Click" ToolTip="Restart the game">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Column="0" Source="pack://application:,,,/Images/reload.png" MaxHeight="16"></Image>
+
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5 0">Restart</TextBlock>
+                    </Grid>
+                </Button>
+
+                <Button Name="btn_MainMenu" Click="btn_MainMenu_Click" ToolTip="Return to Main Menu">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+
+
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5 0">Quit to Main Menu</TextBlock>
+                    </Grid>
+                </Button>
+
+                <Button Name="btn_Exit" Click="btn_Exit_Click" ToolTip="Exit the game" ToolBar.OverflowMode="Always">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+
+
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5 0">Exit Game</TextBlock>
+                    </Grid>
+                </Button>
+
+            </ToolBar>
+        </ToolBarTray>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <GroupBox Grid.Row="0" Name="DayGroupBox" Header="Day: 0/0">
+                <StackPanel>
+                    <Border BorderBrush="#FF00B5C5" BorderThickness="2" CornerRadius="2" Background="#FFA2F2FE" HorizontalAlignment="Center" MinWidth="100">
+                        <Border BorderBrush="#FF00B5C5" BorderThickness="2" CornerRadius="2" Background="LightGreen" Margin="1">
+
+                            <StackPanel Margin="10 5">
+                                <TextBlock Name="tblc_PetName" Text="Pet Name" HorizontalAlignment="Center" TextAlignment="Center" FontWeight="Bold"/>
+                            </StackPanel>
+
+                        </Border>
+                    </Border>
+
+                    <Border BorderThickness="1" BorderBrush="#FF000000">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="10">
+                                <TextBlock Name="tblc_currentHappiness" Margin="0 0 0 5">♥: {0}</TextBlock>
+
+                                <TextBlock Name="tblc_currentMoney" >$: {0}</TextBlock>
+                                <TextBlock Name="tblc_currentFreeHours" Margin="0 0 0 10">Free hours: {0}</TextBlock>
+
+                                <TextBlock Name="tblc_currentHunger" >Hunger: {0}</TextBlock>
+
+                            </StackPanel>
+
+                            <Image Grid.Column="1" Name="img_Pet" Source="pack://application:,,,/Images/puppy.png"></Image>
+
+                            <TextBlock Grid.Column="2" Name="tblc_description"/>
+                        </Grid>
+                    </Border>
+
+                    <TextBlock Name="tblc_DailyMessage">Daily Message</TextBlock>
+
+                    <RadioButton Name="DailyChoice1" IsChecked="True">DailyChoice1: Walk</RadioButton>
+                    <RadioButton Name="DailyChoice2" >DailyChoice2: Feed1</RadioButton>
+                    <RadioButton Name="DailyChoice3" Visibility="Hidden">DailyChoice3: Special</RadioButton>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Column="0" Grid.Row="0">
+                            <TextBlock>
+                                A big bone:
+                                <LineBreak/>
+                                Price:  $14
+                                <LineBreak/>
+                                Effect: no more hunger
+                            </TextBlock>
+                            <Button Name="btn_BuyBone" Click="BtnBuyBone_Click">Buy</Button>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="0" Grid.Row="1">
+                            <TextBlock>
+                                A toy mouse:
+                                <LineBreak/>
+                                Price:  $4
+                                <LineBreak/>
+                                Effect: +1 ♥ every day
+                            </TextBlock>
+                            <Button Name="btn_BuyToy" Click="btnBuyToy_Click">Buy</Button>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Grid.Row="0">
+                            <TextBlock>
+                                Forage:
+                                <LineBreak/>
+                                Price:  $10
+                                <LineBreak/>
+                                Effect: hunger is weaker
+                            </TextBlock>
+                            <Button Name="btn_BuyForage" Click="BtnBuyForage_Click">Buy</Button>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Grid.Row="1">
+                            <TextBlock>
+                                Fruits:
+                                <LineBreak/>
+                                Price:  $2
+                                <LineBreak/>
+                                Effect: -2 hunger
+                            </TextBlock>
+                            <Button Name="btn_BuyFruit" Click="btnBuyFruit_Click">Buy</Button>
+                        </StackPanel>
+
+                    </Grid>
+
+                    <TextBlock Name="tblc_LastDay" Foreground="Coral" Visibility="Hidden" HorizontalAlignment="Center">The last day</TextBlock>
+
+                    <Button Name="btn_Next" Click="BtnNext_Click" Background="Khaki" Content="✔" Width="50"/>
+
+                    <TextBlock Name="tblc_Final" Visibility="Collapsed">Final ♥:</TextBlock>
+                    <TextBlock Name="tblc_Result" Visibility="Collapsed">Result</TextBlock>
+                </StackPanel>
+            </GroupBox>
+
+            <Image Grid.Row="1" Name="image_win" Source="pack://application:,,,/Images/kitten.png" Stretch="Uniform" Visibility="Collapsed"></Image>
+        </Grid>
     </Grid>
 </UserControl>
