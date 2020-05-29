@@ -9,8 +9,10 @@ namespace Pet
     /// <summary>
     /// Interaction logic for UserControl_MainMenu.xaml
     /// </summary>
-    public partial class UserControl_MainMenu : UserControl
+    public partial class UserControl_MainMenu : UserControl, IDisposable
     {
+        void IDisposable.Dispose() { }
+
         public UserControl_MainMenu()
         {
             InitializeComponent();

@@ -10,8 +10,10 @@ namespace Pet
     /// <summary>
     /// Interaction logic for UserControl_Game.xaml
     /// </summary>
-    public partial class UserControl_Game : UserControl
+    public partial class UserControl_Game : UserControl, IDisposable
     {
+        void IDisposable.Dispose() { }
+
         #region VARIABLES
 
         int mDays = 20, CurDay = 1, happiness = 15, HapBonus = 0, hunger = 0, HungerModifier = 2, money = 1, freeHour = 1;

@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Pet.Properties;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Pet
 {
@@ -21,6 +12,24 @@ namespace Pet
         public Window_Options()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            checkBox_dailyComments.IsChecked = (bool)Settings.Default["dailyComments"];
+            tb_Name.Text = (string)Settings.Default["defaultName"];
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Settings.Default["dailyComments"] = checkBox_dailyComments.IsChecked;
+            Settings.Default["defaultName"] = tb_Name.Text;
+            Settings.Default.Save();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

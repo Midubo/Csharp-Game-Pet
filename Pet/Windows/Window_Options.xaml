@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pet"
         mc:Ignorable="d"
-        Title="Window_Options" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Options" Height="175" Width="300"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        FontFamily="pack://application:,,,/#Kavivanar"
+        Loaded="Window_Loaded" Closed="Window_Closed"
+        FontSize="14">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="FontSize" Value="22"/>
+        </Style>
+    </Window.Resources>
+
+    <Border BorderBrush="#FF00B5C5" BorderThickness="5" CornerRadius="2" Background="#FFa2F2FE">
+        <Border BorderBrush="#FF00B5C5" BorderThickness="2" CornerRadius="2" Background="White" Margin="1">
+
+            <StackPanel Margin="10">
+                <CheckBox Name="checkBox_dailyComments" Margin="0 0 0 5">Daily comments</CheckBox>
+                <TextBlock Text="Dafault pet's name:"/>
+                <TextBox Name="tb_Name" Text="Rex" Margin="0 0 0 5"/>
+                <Button Click="Button_Click" Content="✔" Width="50"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Border>
+
 </Window>
