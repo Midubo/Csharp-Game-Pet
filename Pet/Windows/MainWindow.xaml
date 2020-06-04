@@ -1,23 +1,11 @@
 ﻿<Window x:Class="Pet.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Pet"
-        mc:Ignorable="d"
-        Title="Pet Main Window" Height="768" Width="1366" WindowStyle="None"
-        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized"
+        Title="Pet" Width="1280" Height="720" WindowStyle="None"
+        ResizeMode="CanResize" WindowStartupLocation="CenterScreen" WindowState="Maximized"
         FontFamily="pack://application:,,,/#Kavivanar"
-        FontSize="14"
+        UseLayoutRounding="True"
         >
 
-    <Window.Resources>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="0 5 0 0" />
-            <Setter Property="FontSize" Value="22" />
-        </Style>
-    </Window.Resources>
-    <Grid>
-
-    </Grid>
 </Window>

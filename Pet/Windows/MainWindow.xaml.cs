@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pet.Properties;
+using System;
 using System.Windows;
 
 namespace Pet
@@ -14,9 +15,14 @@ namespace Pet
         {
             InitializeComponent();
 
+            if ((bool)Settings.Default["windowed"] == true)
+            {
+                WindowStyle = WindowStyle.ToolWindow;
+            }
+            WindowState = WindowState.Maximized;
+
             Content = new UserControl_MainMenu();
         }
-
 
     }
 }

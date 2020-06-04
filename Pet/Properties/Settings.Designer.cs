@@ -58,5 +58,29 @@ namespace Pet.Properties {
                 this["dailyComments"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool music {
+            get {
+                return ((bool)(this["music"]));
+            }
+            set {
+                this["music"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool windowed {
+            get {
+                return ((bool)(this["windowed"]));
+            }
+            set {
+                this["windowed"] = value;
+            }
+        }
     }
 }
