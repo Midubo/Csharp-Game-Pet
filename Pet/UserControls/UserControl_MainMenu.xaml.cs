@@ -18,7 +18,7 @@ namespace Pet
             InitializeComponent();
 
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
-            tblc_version.Text = string.Format(" - Version {0}.{1}.{2}", version.Major, version.Minor, version.Build);
+            tblc_version.Text += string.Format(" - Version {0}.{1}.{2}", version.Major, version.Minor, version.Build);
         }
 
         private void btn_Play_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -59,6 +59,11 @@ namespace Pet
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
+        }
+
+        private void btn_Website_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

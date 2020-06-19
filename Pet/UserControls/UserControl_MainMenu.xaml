@@ -3,20 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Pet"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Background="White"
+             mc:Ignorable="d"
+             d:DesignHeight="878" d:DesignWidth="1300"
+             Background="#eaf1fc"
+             FontSize="14" UseLayoutRounding="True"
              >
 
     <UserControl.Resources>
 
-        <Style x:Key="ImageStackStyle" TargetType="{x:Type Image}">
-            <Setter Property="Margin" Value="10,0"/>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="0 5 0 0"/>
+            <Setter Property="FontSize" Value="48"/>
+            <Setter Property="BorderThickness" Value="0"/>
+
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Style.Resources>
         </Style>
 
-        <Style TargetType="{x:Type Image}">
-            <Setter Property="Stretch" Value="None"/>
+        <Style x:Key="ImageStackStyle" TargetType="{x:Type Image}">
+            <Setter Property="Margin" Value="10,0"/>
         </Style>
 
         <Style TargetType="{x:Type Hyperlink}">
@@ -41,7 +49,7 @@
     <Border Margin="10">
 
         <Border.Background>
-            <ImageBrush ImageSource="pack://application:,,,/Images/menu-background.jpg" Stretch="Uniform" AlignmentX="Left" AlignmentY="Top"/>
+            <ImageBrush ImageSource="pack://application:,,,/Images/pet.png" Stretch="Uniform" AlignmentX="Left" AlignmentY="Top"/>
         </Border.Background>
 
         <Grid>
@@ -63,7 +71,7 @@
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" FontSize="72" FontWeight="Bold">Pet</TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" FontSize="72" FontWeight="Bold" FontFamily="Comic Sans MS">Pet</TextBlock>
 
             <Grid Grid.Column="1" Grid.Row="1">
 
@@ -72,50 +80,22 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Border Grid.Column="0" BorderBrush="DodgerBlue" BorderThickness="3,3,3,5" CornerRadius="8,8,3,3" HorizontalAlignment="Right">
+                <Grid Grid.Column="0" HorizontalAlignment="Right" Margin="10">
 
-                    <Border.Resources>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Margin" Value="0 5 0 0"/>
-                            <Setter Property="Height" Value="60"/>
-                            <Setter Property="FontSize" Value="48"/>
-                        </Style>
-                    </Border.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                            <GradientStop Color="AliceBlue" Offset="0.0"/>
-                            <GradientStop Color="AntiqueWhite" Offset="0.5"/>
-                            <GradientStop Color="AliceBlue" Offset="1.0"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
+                    <Button Grid.Row="0" Content="PLAY" Click="btn_Play_Click" Background="SkyBlue"/>
+                    <Button Grid.Row="1" Content="OPTIONS" Click="btn_Options_Click" Background="LightGreen"/>
+                    <Button Grid.Row="2" Content="ABOUT" Click="btn_Website_Click" ToolTip="{Binding ElementName=link, Path=NavigateUri}" Background="#ffe868"/>
+                    <Button Grid.Row="3" Content="BYE" Click="btn_Exit_Click" ToolTip="Exit" Background="Coral"/>
+                </Grid>
 
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-
-                        <Button Grid.Row="0" Content="PLAY" Click="btn_Play_Click"/>
-                        <Button Grid.Row="1" Content="OPTIONS" Click="btn_Options_Click"/>
-                        <Button Grid.Row="2" Content="CREDITS" Click="btn_Creators_Click"/>
-                        <Button Grid.Row="3" Content="VERSION" Click="btn_Version_Click"/>
-                        <Button Grid.Row="4" Content="EXIT" Click="btn_Exit_Click"/>
-                    </Grid>
-
-                </Border>
-
-                <Border Grid.Column="1" BorderBrush="DodgerBlue" BorderThickness="3,3,3,5" CornerRadius="8,8,3,3">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                            <GradientStop Color="LightCyan" Offset="0.0" />
-                            <GradientStop Color="LightBlue" Offset="0.5" />
-                            <GradientStop Color="DarkTurquoise" Offset="1.0" />
-                        </LinearGradientBrush>
-                    </Border.Background>
+                <Border Grid.Column="1" BorderBrush="DodgerBlue" BorderThickness="5" CornerRadius="10" Background="DarkTurquoise">
 
                     <Grid>
                         <Grid.RowDefinitions>
@@ -128,7 +108,7 @@
 
                         <Image Grid.Row="0" Source="pack://application:,,,/Images/puppy.png" Style="{StaticResource ImageStackStyle}"></Image>
 
-                        <Image Grid.Row="1" Source="pack://application:,,,/Images/kitten.png" Style="{StaticResource ImageStackStyle}"></Image>
+                        <Image Grid.Row="1" Source="pack://application:,,,/Images/kitty.png" Style="{StaticResource ImageStackStyle}"></Image>
 
                         <Image Grid.Row="2" Source="pack://application:,,,/Images/hamster.png" Style="{StaticResource ImageStackStyle}"></Image>
 
@@ -140,7 +120,7 @@
 
             </Grid>
 
-            <Border Grid.Row="2" Grid.Column="1" Name="border_Creators" BorderBrush="DodgerBlue" BorderThickness="3,3,3,5" CornerRadius="8,8,3,3" VerticalAlignment="Bottom">
+            <Border Grid.Row="2" Grid.Column="1" Name="border_Creators" BorderBrush="DodgerBlue" BorderThickness="5" CornerRadius="10" VerticalAlignment="Bottom">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                         <GradientStop Color="Orange" Offset="0.0"/>
@@ -149,13 +129,13 @@
                     </LinearGradientBrush>
                 </Border.Background>
 
-                <TextBlock FontSize="36" TextAlignment="Center" Margin="5">
-                    <Hyperlink NavigateUri="https://www.youtube.com/c/MishaDubok" RequestNavigate="Hyperlink_RequestNavigate">YouTube Channel</Hyperlink>
+                <TextBlock FontSize="36" TextAlignment="Center" Margin="5" ToolTip="{Binding ElementName=link, Path=NavigateUri}">
+                    <Hyperlink Name="link" NavigateUri="https://www.youtube.com/c/MishaDubok" RequestNavigate="Hyperlink_RequestNavigate">YouTube Channel</Hyperlink>
                 </TextBlock>
 
             </Border>
 
-            <TextBlock Grid.Column="0" Grid.Row="2" Name="tblc_version" Text="Version" VerticalAlignment="Bottom"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Name="tblc_version" Text="© 2015-2020" VerticalAlignment="Bottom"/>
         </Grid>
     </Border>
 </UserControl>

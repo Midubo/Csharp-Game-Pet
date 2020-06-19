@@ -1,7 +1,7 @@
-D:\Nothing\VS 2019\WPF\Pet\bin\Debug\Pet.exe.config
-D:\Nothing\VS 2019\WPF\Pet\bin\Debug\Pet.exe
-D:\Nothing\VS 2019\WPF\Pet\bin\Debug\Pet.pdb
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet.csprojAssemblyReference.cache
+D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Windows\MainWindow.baml
+D:\Nothing\VS 2019\WPF\Pet\obj\Debug\UserControls\UserControl_MainMenu.baml
+D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Windows\Window_Options.baml
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\UserControls\UserControl_SelectPet.g.cs
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\UserControls\UserControl_Game.g.cs
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Windows\MainWindow.g.cs
@@ -12,12 +12,12 @@ D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet_MarkupCompile.cache
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet_MarkupCompile.lref
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\UserControls\UserControl_SelectPet.baml
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\UserControls\UserControl_Game.baml
-D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Windows\MainWindow.baml
-D:\Nothing\VS 2019\WPF\Pet\obj\Debug\UserControls\UserControl_MainMenu.baml
-D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Windows\Window_Options.baml
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet.g.resources
+D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet.pdb
+D:\Nothing\VS 2019\WPF\Pet\bin\Debug\Pet.exe.config
+D:\Nothing\VS 2019\WPF\Pet\bin\Debug\Pet.exe
+D:\Nothing\VS 2019\WPF\Pet\bin\Debug\Pet.pdb
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet.Properties.Resources.resources
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet.csproj.GenerateResource.cache
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet.csproj.CoreCompileInputs.cache
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet.exe
-D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet.pdb
