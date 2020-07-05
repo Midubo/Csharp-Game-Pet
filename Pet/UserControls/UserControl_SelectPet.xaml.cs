@@ -89,6 +89,11 @@ namespace Pet
             Content = new UserControl_MainMenu();
         }
 
+        private void ChangedPet(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void btn_Exit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -136,24 +141,24 @@ namespace Pet
                 string pet = "";
 
                 string description = "Pet effect: ";
-                if (choiceA.IsChecked == true)
+                if (choicePuppy.IsChecked == true)
                 {
                     pet = "puppy";
                     description += "None";
                 }
-                else if (choiceB.IsChecked == true)
+                else if (choiceKitty.IsChecked == true)
                 {
                     Days += 1;
                     pet = "kitty";
                     description += "+1 Day";
                 }
-                else if (choiceC.IsChecked == true)
+                else if (choiceParrot.IsChecked == true)
                 {
                     HungerModifier -= 1;
                     pet = "parrot";
                     description += "Hunger 50% weaker";
                 }
-                else if (choiceD.IsChecked == true)
+                else if (choiceHamster.IsChecked == true)
                 {
                     happiness += 10;
                     Days -= 1;
