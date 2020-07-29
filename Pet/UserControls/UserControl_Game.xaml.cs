@@ -36,7 +36,7 @@ namespace Pet
 
         #region LOADING
 
-        public UserControl_Game(string _petName, int _Days, int _happiness, int _HapBonus, int _hunger, int _HungerModifier, string pet, string description)
+        public UserControl_Game(string _petName, int _Days, int _happiness, int _HapBonus, int _hunger, int _HungerModifier, string pet, string description, string age, string description_age)
         {
             InitializeComponent();
 

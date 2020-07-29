@@ -1,6 +1,8 @@
 ﻿using Pet.Properties;
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Pet
 {
@@ -9,44 +11,86 @@ namespace Pet
     /// </summary>
     public partial class UserControl_SelectPet : UserControl
     {
+
+        #region VARIABLES
+
+        private int mWins;
+
+        /// <summary>
+        /// The total number of days in the game by default. The game balance relies heavily on this. Cannot be negative.
+        /// </summary>
+        private int mTotalDays = 15;
+
+        private int mHungerModifier = 2, mHappiness = 15, mHappinessBonus = 0, mHunger;
+        string mPetName;
+
+        private MediaPlayer mediaPlayer = new MediaPlayer();
+
+        #endregion
+
+        public Animal SelectedPet { get; set; }
+
         #region LOADING
 
         public UserControl_SelectPet()
         {
+            SelectedPet = new Animal();
+
             InitializeComponent();
 
             AgeChoice1.Checked += AgeChoice_CheckedChanged;
             AgeChoice2.Checked += AgeChoice_CheckedChanged;
             AgeChoice3.Checked += AgeChoice_CheckedChanged;
+
+            mediaPlayer.Open(new Uri(string.Format("{0}\\Run_Little_Chicken.mp3", AppDomain.CurrentDomain.BaseDirectory)));
+
+            mediaPlayer.MediaEnded += new EventHandler(Media_Ended);
+
+            if ((bool)Settings.Default["music"] == true)
+            {
+                mediaPlayer.Play();
+            }
+
+            DataContext = this;
+        }
+
+        private void Media_Ended(object sender, EventArgs e)
+        {
+            if ((bool)Settings.Default["music"] == true)
+            {
+                mediaPlayer.Position = TimeSpan.Zero;
+
+                mediaPlayer.Play();
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            wins = (int)Settings.Default["wins"];
+            mWins = (int)Settings.Default["wins"];
 
-            tblc_Intro.Text = "Wins: " + wins;
+            tblc_Intro.Text = "Wins: " + mWins;
 
-            if (wins >= 1)
+            if (mWins >= 1)
             {
                 AgeChoice2.IsEnabled = true;
 
-                if (wins >= 2)
+                if (mWins >= 2)
                 {
                     AgeChoice3.IsEnabled = true;
 
-                    if (wins >= 5)
+                    if (mWins >= 3)
                     {
                         stackPanel_Kitty.IsEnabled = true;
 
-                        if (wins >= 10)
+                        if (mWins >= 4)
                         {
                             stackPanel_Parrot.IsEnabled = true;
 
-                            if (wins >= 15)
+                            if (mWins >= 5)
                             {
                                 stackPanel_Hamster.IsEnabled = true;
 
-                                if (wins >= 20)
+                                if (mWins >= 6)
                                 {
                                     stackPanel_Panda.IsEnabled = true;
                                 }
@@ -61,86 +105,82 @@ namespace Pet
 
         #endregion
 
-        #region VARIABLES
-
-        int wins, Days = 15, HungerModifier = 2, happiness = 15, HapBonus = 0, hunger;
-        string PetName;
-
-        #endregion
-
-        #region SECONDARY BUTTONS
-
-        #region RESTART
-
-        private void btn_Restart_Click(object sender, RoutedEventArgs e)
-        {
-            RestartGame();
-        }
-
-        void RestartGame()
-        {
-            this.Content = new UserControl_SelectPet();
-        }
-
-        #endregion
-
-        private void btn_MainMenu_Click(object sender, RoutedEventArgs e)
-        {
-            Content = new UserControl_MainMenu();
-        }
-
-        private void ChangedPet(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btn_Exit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-        #endregion
-
         private void AddWin_Click(object sender, RoutedEventArgs e)
         {
-            wins++;
-            Settings.Default["wins"] = wins;
+            mWins++;
+            Settings.Default["wins"] = mWins;
             Settings.Default.Save();
-            tblc_Intro.Text = "Wins: " + wins;
+            tblc_Intro.Text = "Wins: " + mWins;
             RestartGame();
         }
 
         private void btn_Erase_Click(object sender, RoutedEventArgs e)
         {
-            wins = 0;
-            tblc_Intro.Text = "Wins: " + wins;
-            Settings.Default["wins"] = wins;
-            Settings.Default.Save();
+            if (MessageBox.Show("Do you want to erase your results and achievements?", "Attention", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                mWins = 0;
+                tblc_Intro.Text = "Wins: " + mWins;
+                Settings.Default["wins"] = mWins;
+                Settings.Default.Save();
+            }
         }
 
         private void AgeChoice_CheckedChanged(object sender, RoutedEventArgs e)
         {
             if (AgeChoice1.IsChecked == true)
             {
-                tblc_Effect.Text = "Effect: +1 Day, +1% hunger";
+                tblc_Effect.Text = "+1 Day\n+1 hunger";
             }
             else if (AgeChoice2.IsChecked == true)
             {
-                tblc_Effect.Text = "Effect: None";
+                tblc_Effect.Text = "None";
             }
             else if (AgeChoice3.IsChecked == true)
             {
-                tblc_Effect.Text = "Effect: +1% ♥, -1 Day";
+                tblc_Effect.Text = "+1 ♥\n-1 Day";
             }
         }
+
+        private void ChangedPet(object sender, RoutedEventArgs e)
+        {
+            if (choicePuppy.IsChecked == true)
+            {
+                SelectedPet.Type = PetType.Puppy;
+            }
+
+            else if (choiceKitty.IsChecked == true)
+            {
+                SelectedPet.Type = PetType.Kitty;
+            }
+
+            else if (choiceParrot.IsChecked == true)
+            {
+                SelectedPet.Type = PetType.Parrot;
+            }
+
+            else if (choiceHamster.IsChecked == true)
+            {
+                SelectedPet.Type = PetType.Hamster;
+            }
+
+            else if (choicePanda.IsChecked == true)
+            {
+                SelectedPet.Type = PetType.Panda;
+            }
+        }
+
+
+
+        #region NAVIGATION BUTTONS
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
             if (tb_Name.Text.Length > 0)
             {
+                mPetName = tb_Name.Text;
                 string pet = "";
 
-                string description = "Pet effect: ";
+                string description = "";
                 if (choicePuppy.IsChecked == true)
                 {
                     pet = "puppy";
@@ -148,57 +188,87 @@ namespace Pet
                 }
                 else if (choiceKitty.IsChecked == true)
                 {
-                    Days += 1;
+                    mTotalDays += 1;
                     pet = "kitty";
                     description += "+1 Day";
                 }
                 else if (choiceParrot.IsChecked == true)
                 {
-                    HungerModifier -= 1;
+                    mHungerModifier -= 1;
                     pet = "parrot";
                     description += "Hunger 50% weaker";
                 }
                 else if (choiceHamster.IsChecked == true)
                 {
-                    happiness += 10;
-                    Days -= 1;
+                    mHappiness += 10;
+                    mTotalDays -= 1;
                     pet = "hamster";
-                    description += "+10 ♥\n-1 Day";
+                    description += "+10 ♥, -1 Day";
                 }
                 else if (choicePanda.IsChecked == true)
                 {
-                    HapBonus += 1;
+                    mHappinessBonus += 1;
                     pet = "panda";
                     description += "+1 ♥ every day";
                 }
 
-                description += "\nAge:";
+                string age = "";
+
                 if (AgeChoice1.IsChecked == true)
                 {
-                    Days += 1;
-                    hunger += 1;
-                    description += "1 month";
+                    mTotalDays += 1;
+                    mHunger += 1;
+                    age += "1 month";
                 }
                 else if (AgeChoice2.IsChecked == true)
                 {
-                    description += "6 months";
+                    age += "6 months";
                 }
                 else if (AgeChoice3.IsChecked == true)
                 {
-                    Days -= 1;
-                    happiness++;
-                    description += "12 months";
+                    mTotalDays -= 1;
+                    mHappiness++;
+                    age += "12 months";
                 }
 
-                PetName = tb_Name.Text;
-                description += "\nAge " + tblc_Effect.Text;
+                string description_age = tblc_Effect.Text.Replace("\n", ", ");
 
-                this.Content = new UserControl_Game(PetName, Days, happiness, HapBonus, hunger, HungerModifier, pet, description);
+                mediaPlayer.Stop();
+
+                (Parent as Window).Content = new UserControl_Game(mPetName, mTotalDays, mHappiness, mHappinessBonus, mHunger, mHungerModifier, pet, description, age, description_age);
             }
             else
                 tblc_WarningName.Visibility = Visibility.Visible;
         }
 
+        #region RESTART
 
+        private void btn_Restart_Click(object sender, RoutedEventArgs e)
+        {
+            mediaPlayer.Stop();
+            RestartGame();
+        }
+
+        void RestartGame()
+        {
+            (Parent as Window).Content = new UserControl_SelectPet();
+        }
+
+        #endregion
+
+        private void btn_MainMenu_Click(object sender, RoutedEventArgs e)
+        {
+            mediaPlayer.Stop();
+            (Parent as Window).Content = new UserControl_MainMenu();
+        }
+
+
+
+        private void btn_Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        #endregion
     }
 }
