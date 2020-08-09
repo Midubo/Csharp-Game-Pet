@@ -53,6 +53,11 @@ namespace Pet
             tblc_description.Text = description;
         }
 
+        private void ShowMenu(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             wins = (int)Settings.Default["wins"];
@@ -80,7 +85,7 @@ namespace Pet
 
             #endregion
 
-            DayGroupBox.Header = string.Format("Day: {0}/{1}", CurDay, mDays);
+
             tblc_PetName.Text = PetName;
             tblc_currentHappiness.Text = string.Format("♥: {0}", happiness);
             tblc_currentHunger.Text = string.Format("Hunger: {0}", hunger);
@@ -177,7 +182,7 @@ namespace Pet
             if (CurDay > mDays) Final();
             else
             {
-                DayGroupBox.Header = string.Format("Day: {0}/{1}", CurDay, mDays);
+
 
                 if (CurDay == mDays) tblc_LastDay.Visibility = Visibility.Visible;
 
@@ -205,10 +210,7 @@ namespace Pet
         void Final()
         {
             btn_Next.Visibility = Visibility.Hidden;
-            tblc_Final.Visibility = Visibility.Visible;
-            tblc_Result.Visibility = Visibility.Visible;
 
-            tblc_Final.Text = "Final ♥: " + happiness;
 
             if (happiness >= 100)
             {
@@ -216,12 +218,12 @@ namespace Pet
                 Settings.Default["wins"] = wins;
                 Settings.Default.Save();
 
-                tblc_Result.Text = "You won!";
-                image_win.Visibility = Visibility.Visible;
+
+
             }
             else
             {
-                tblc_Result.Text = "You lost. Your pet is sad.";
+
             }
         }
 

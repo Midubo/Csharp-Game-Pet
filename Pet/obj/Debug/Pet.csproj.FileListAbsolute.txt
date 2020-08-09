@@ -9,7 +9,6 @@ D:\Nothing\VS 2019\WPF\Pet\obj\Debug\UserControls\UserControl_MainMenu.g.cs
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Windows\Window_Options.g.cs
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\App.g.cs
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet_MarkupCompile.cache
-D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet_MarkupCompile.lref
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\UserControls\UserControl_SelectPet.baml
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\UserControls\UserControl_Game.baml
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet.g.resources
