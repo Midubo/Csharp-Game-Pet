@@ -66,6 +66,12 @@
     <Compile Include="Windows\Window_Options.xaml.cs">
       <DependentUpon>Window_Options.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Window_Menu.xaml.cs">
+      <DependentUpon>Window_Menu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Window_Final.xaml.cs">
+      <DependentUpon>Window_Final.xaml</DependentUpon>
+    </Compile>
     <Page Include="UserControls\UserControl_SelectPet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -94,6 +100,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Window_Options.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Window_Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Window_Final.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

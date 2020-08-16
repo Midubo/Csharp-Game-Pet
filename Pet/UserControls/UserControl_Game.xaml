@@ -173,7 +173,7 @@
 
                         <StackPanel Grid.Column="0" Margin="5 0">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontWeight="Bold" Text="Pet:"/>
+                                <TextBlock FontWeight="Bold" Text="Pet: "/>
 
                                 <TextBlock Name="tblc_pet" Text="tblc_pet"/>
 
@@ -186,7 +186,7 @@
 
                         <StackPanel Grid.Column="1">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontWeight="Bold" Text="Age:"/>
+                                <TextBlock FontWeight="Bold" Text="Age: "/>
 
                                 <TextBlock Name="tblc_age" Text="tblc_age"/>
                             </StackPanel>
@@ -307,7 +307,7 @@
                     </Grid>
 
                     <TextBlock Grid.Row="1">
-                        <Run BaselineAlignment="Center">Effect:</Run><Image Source="pack://application:,,,/Images/hunger.png" Height="32" Width="32" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/>is weaker
+                       <Run BaselineAlignment="Center">Effect:</Run><Image Source="pack://application:,,,/Images/hunger.png" Height="32" Width="32" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/><Run BaselineAlignment="Center">is weaker</Run>
                     </TextBlock>
 
                     <Button Grid.Row="2" Name="btn_BuyForage" Click="BtnBuyForage_Click">

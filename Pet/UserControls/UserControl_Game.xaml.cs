@@ -4,6 +4,7 @@ using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 
 namespace Pet
 {
@@ -16,60 +17,117 @@ namespace Pet
 
         #region VARIABLES
 
-        int mDays = 20, CurDay = 1, happiness = 15, HapBonus = 0, hunger = 0, HungerModifier = 2, money = 1, freeHour = 1;
+        /// <summary>
+        /// The number of days in the game. The game balance should rely on this number. Cannot be negative.
+        /// </summary>
+        int mTotalDays = 15;
 
-        int wins = 0, HappinessforWalk = 13, PriceToy = 4, PriceFood2 = 2, PriceBone = 14;
+        int mCurrentDay = 1, mHappiness = 15, mHappinessBonus = 0, mHunger = 0, mHungerModifier = 2, mMoney = 1;
 
-        bool BigBone = false, mDailyChoice3Available = false;
+        /// <summary>
+        /// The number of free hours available. Cannot be negative.
+        /// </summary>
+        int mFreeHours = 1;
+
+        int mWins = 0, mHappinessforWalk = 13;
+
+        int mPriceBone = 14, mPriceToy = 4, mPriceVegetables = 10, mPriceFruits = 2;
+
+        /// <summary>
+        /// Indicates whether item "Big Bone" was purchased
+        /// </summary>
+        bool mBigBonePurchased = false;
+
+        bool mDailyChoice3Available = false;
 
         Queue qu = new Queue();
 
         Random rnd = new Random();
 
-        string PetName;
+        string mPetName;
 
-        string[] s1 = { "Your pet dreamt of you tonight.", "Play more and win to unlock other pets.", "Consider taking a break.", "There's a secret pet.", "You can always erase your statistics. (but what for?)", "Your pet have met another pet for the first time", "Your pet has woken up.", "Your pet wants to go for a walk.", "Your pet loves you.", "A big bone is very useful if you're tired of feeding your pet.", "Your pet tore your jacket.", "Never kick your pet.", "The name is very important (e.g. a parrot called Rex is aggressive)." };
+        /// <summary>
+        /// TODO: place in a database or a resx file
+        /// </summary>
+        string[] mComments = {
+            "Your pet dreamt of you tonight.",
+            "Win more games to unlock other pets.",
+            "Consider taking a break.",
+            "The panda a secret pet.",
+            "You can always erase your statistics.",
+            "Your pet has met another pet for the first time",
+            "Your pet has woken up.",
+            "Your pet wants to go for a walk.",
+            "Your pet loves you.",
+            "A big bone is very useful if you're tired of feeding your pet.",
+            "Your pet... you will need a new jacket.",
+            "Never kick your pet.",
+            "The name is very important (e.g. a parrot called Rex is aggressive).",
+            "There is a little chance of getting the third choice every day",
+            "Dogs can understand up to 250 words!",
+            "Cats can run at 50 km per hour for some time!"
+        };
 
-        bool dailyComments;
+        bool mDailyCommentsEnabled;
+
+        private MediaPlayer mediaPlayer = new MediaPlayer();
 
         #endregion
 
         #region LOADING
 
-        public UserControl_Game(string _petName, int _Days, int _happiness, int _HapBonus, int _hunger, int _HungerModifier, string pet, string description, string age, string description_age)
+        public UserControl_Game(string _petName, int _Days, int _happiness, int _HapBonus, int _hunger, int _HungerModifier, string pet, string description_pet, string age, string description_age)
         {
             InitializeComponent();
 
-            PetName = _petName;
-            mDays = _Days;
-            happiness = _happiness;
-            HapBonus = _HapBonus;
-            hunger = _hunger;
-            HungerModifier = _HungerModifier;
+            mPetName = _petName;
+            mTotalDays = _Days;
+            mHappiness = _happiness;
+            mHappinessBonus = _HapBonus;
+            mHunger = _hunger;
+            mHungerModifier = _HungerModifier;
+
+            tblc_pet.Text = pet;
+            tblc_description.Text = description_pet;
+
+            tblc_age.Text = age;
+            tblc_description_age.Text = description_age;
 
             ImageSourceConverter imgs = new ImageSourceConverter();
             img_Pet.SetValue(Image.SourceProperty, imgs.ConvertFromString(string.Format("pack://application:,,,/Images/{0}.png", pet)));
 
-            tblc_description.Text = description;
+            mediaPlayer.Open(new Uri(string.Format("{0}\\Rainbow_Forest.mp3", AppDomain.CurrentDomain.BaseDirectory)));
+            mediaPlayer.MediaEnded += new EventHandler(Media_Ended);
+            if ((bool)Settings.Default["music"] == true)
+            {
+                mediaPlayer.Play();
+            }
+
+            // Show buttons to buy items the can be afforded
+            CheckItemsAvailability();
         }
 
-        private void ShowMenu(object sender, RoutedEventArgs e)
+        private void Media_Ended(object sender, EventArgs e)
         {
-
+            if ((bool)Settings.Default["music"] == true)
+            {
+                mediaPlayer.Position = TimeSpan.Zero;
+                mediaPlayer.Play();
+            }
         }
 
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            wins = (int)Settings.Default["wins"];
+            mWins = (int)Settings.Default["wins"];
 
             #region writing daily comments
 
-            dailyComments = (bool)Settings.Default["dailyComments"];
+            mDailyCommentsEnabled = (bool)Settings.Default["dailyComments"];
 
-            if (dailyComments == true)
+            if (mDailyCommentsEnabled == true)
             {
                 ArrayList lst = new ArrayList();
-                lst.AddRange(s1);
+                lst.AddRange(mComments);
 
                 while (lst.Count > 0)
                 {
@@ -85,87 +143,114 @@ namespace Pet
 
             #endregion
 
+            tblc_day.Text = string.Format("{0}/{1}", mCurrentDay, mTotalDays);
 
-            tblc_PetName.Text = PetName;
-            tblc_currentHappiness.Text = string.Format("♥: {0}", happiness);
-            tblc_currentHunger.Text = string.Format("Hunger: {0}", hunger);
-            tblc_currentMoney.Text = string.Format("$: {0}", money);
-            tblc_currentFreeHours.Text = string.Format("Free hours: {0}", freeHour);
+            tblc_PetName.Text = mPetName;
+            tblc_currentHappiness.Text = string.Format("{0}", mHappiness);
+            tblc_currentHunger.Text = string.Format("{0}", mHunger);
+            tblc_currentMoney.Text = string.Format("{0}", mMoney);
+            tblc_currentFreeHours.Text = string.Format("{0}", mFreeHours);
 
             if (qu.Count > 0) tblc_DailyMessage.Text = qu.Dequeue().ToString();
 
-            DailyChoice1.Content = string.Format("Take {0} for a walk ( + {1} ♥, -1 free hour", PetName, HappinessforWalk);
+            DailyChoice1.Content = string.Format("Take {0} for a walk ( + {1} ♥, -1 free hour", mPetName, mHappinessforWalk);
             DailyChoice2.Content = "Feed your pet with vegetables (+5 ♥, -1 hunger, -$1)";
-            DailyChoice3.Content = "Play with your pet (+15 ♥)";
         }
 
         #endregion
 
-        #region UPPER BUTTONS
-
-        #region RESTART
-
-        private void btn_Restart_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            RestartGame();
-        }
+        #region MENU
 
         void RestartGame()
         {
-            this.Content = new UserControl_SelectPet();
+            mediaPlayer.Stop();
+            (Parent as Window).Content = new UserControl_SelectPet();
+        }
+
+        private void ShowMenu(object sender, RoutedEventArgs e)
+        {
+            this.Opacity = 0.4;
+            this.Effect = new BlurEffect();
+
+            Window_Menu w = new Window_Menu()
+            {
+                Owner = this.Parent as Window,
+                ShowInTaskbar = false
+            };
+            if (w.ShowDialog() == false)
+            {
+                string command = w.command;
+
+                this.Opacity = 1;
+                this.Effect = null;
+                (Parent as Window).ShowInTaskbar = true;
+
+                if ((bool)Settings.Default["music"] == false)
+                {
+                    mediaPlayer.Stop();
+                }
+                else
+                {
+                    mediaPlayer.Position = TimeSpan.Zero;
+                    mediaPlayer.Play();
+                }
+
+                if (command == "restart")
+                {
+                    RestartGame();
+                }
+                else if (command == "mainmenu")
+                {
+                    mediaPlayer.Stop();
+                    (Parent as Window).Content = new UserControl_MainMenu();
+                }
+                else
+                {
+
+                }
+            }
         }
 
         #endregion
 
-        private void btn_MainMenu_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
-            Content = new UserControl_MainMenu();
-        }
-
-        private void btn_Exit_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-        #endregion
-
-        private void BtnNext_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (DailyChoice1.IsChecked == true && freeHour >= 1)
+            if (DailyChoice1.IsChecked == true && mFreeHours >= 1)
             {
-                happiness += HappinessforWalk;
-                freeHour--;
+                mHappiness += mHappinessforWalk;
+                mFreeHours--;
             }
-            if (DailyChoice2.IsChecked == true && money >= 1)
+            else if (DailyChoice2.IsChecked == true && mMoney >= 1)
             {
-                happiness += 5;
-                money--;
-                hunger--;
+                mHappiness += 5;
+                mMoney--;
+                mHunger--;
             }
-            if (DailyChoice3.IsChecked == true && mDailyChoice3Available == true)
+            else if (DailyChoice3.IsChecked == true && mDailyChoice3Available == true && mFreeHours >= 2)
             {
-                happiness += 15;
+                mHappiness += 15;
+                mFreeHours -= 2;
             }
 
             rnd = new Random();
-            if (hunger > 0)
+            if (mHunger > 0)
             {
-                happiness -= (hunger * HungerModifier) + rnd.Next(0, 2);
+                mHappiness -= (mHunger * mHungerModifier) + rnd.Next(0, 2);
             }
 
-            if (BigBone == false)
+            if (mBigBonePurchased == false)
             {
-                hunger += 1;
+                mHunger += 1;
             }
 
-            if (hunger < 0)
+            if (mHunger < 0)
             {
-                hunger = 0;
+                mHunger = 0;
             }
 
-            happiness += HapBonus;
-            money++;
-            freeHour++;
+            mHappiness += mHappinessBonus;
+            mMoney++;
+            mFreeHours++;
             Play();
         }
 
@@ -173,18 +258,19 @@ namespace Pet
         {
             DailyChoice3.Visibility = Visibility.Hidden;
 
-            tblc_currentHappiness.Text = "♥: " + happiness;
-            tblc_currentHunger.Text = "Hunger: " + hunger;
-            tblc_currentMoney.Text = "$: " + money;
-            tblc_currentFreeHours.Text = "Free hours: " + freeHour;
+            tblc_currentHappiness.Text = mHappiness.ToString();
+            tblc_currentHunger.Text = mHunger.ToString();
+            tblc_currentMoney.Text = mMoney.ToString();
+            tblc_currentFreeHours.Text = mFreeHours.ToString();
+            pb_days.Value = ((double)mCurrentDay / mTotalDays) * 100;
 
-            CurDay++;
-            if (CurDay > mDays) Final();
+            mCurrentDay++;
+            if (mCurrentDay > mTotalDays) Final();
             else
             {
+                tblc_day.Text = string.Format("{0}/{1}", mCurrentDay, mTotalDays);
 
-
-                if (CurDay == mDays) tblc_LastDay.Visibility = Visibility.Visible;
+                if (mCurrentDay == mTotalDays) tblc_LastDay.Visibility = Visibility.Visible;
 
                 if (qu.Count > 0)
                 {
@@ -195,6 +281,10 @@ namespace Pet
                 {
                     DailyChoice3.Visibility = Visibility.Visible;
                     mDailyChoice3Available = true;
+
+                    if (mFreeHours < 2)
+                        DailyChoice3.IsEnabled = false;
+                    else DailyChoice3.IsEnabled = true;
                 }
                 else
                 {
@@ -203,83 +293,109 @@ namespace Pet
                         DailyChoice1.IsChecked = true;
                     }
                 }
-
             }
+
+            CheckItemsAvailability();
+        }
+
+        void CheckItemsAvailability()
+        {
+            btn_BuyBone.Visibility = btn_BuyToy.Visibility = btn_BuyForage.Visibility = btn_BuyFruit.Visibility = Visibility.Hidden;
+
+            if (mMoney >= mPriceBone)
+                btn_BuyBone.Visibility = Visibility.Visible;
+
+            if (mMoney >= mPriceToy)
+                btn_BuyToy.Visibility = Visibility.Visible;
+
+            if (mMoney >= mPriceVegetables)
+                btn_BuyForage.Visibility = Visibility.Visible;
+
+            if (mMoney >= mPriceFruits)
+                btn_BuyFruit.Visibility = Visibility.Visible;
         }
 
         void Final()
         {
             btn_Next.Visibility = Visibility.Hidden;
 
+            this.Opacity = 0.4;
+            this.Effect = new BlurEffect();
 
-            if (happiness >= 100)
+            Window_Final w = new Window_Final(mHappiness)
             {
-                wins++;
-                Settings.Default["wins"] = wins;
-                Settings.Default.Save();
+                Owner = this.Parent as Window,
+                ShowInTaskbar = false
+            };
+            w.ShowDialog();
 
-
-
-            }
-            else
-            {
-
-            }
+            this.Opacity = 1;
+            this.Effect = null;
+            (Parent as Window).ShowInTaskbar = true;
+            RestartGame();
         }
 
-        private void BtnBuyBone_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnBuyBone_Click(object sender, RoutedEventArgs e)
         {
-            if (BigBone == false && money >= PriceBone)
+            if (mBigBonePurchased == false && mMoney >= mPriceBone)
             {
                 btn_BuyBone.Background = Brushes.DeepSkyBlue;
                 btn_BuyBone.Content = "Purchased";
-                BigBone = true;
-                hunger = 0;
-                money -= PriceBone;
+                mBigBonePurchased = true;
+                mHunger = 0;
+                mMoney -= mPriceBone;
                 btn_BuyBone.IsEnabled = false;
-                tblc_currentHunger.Text = "Hunger: " + hunger + "%";
-                tblc_currentMoney.Text = "$: " + money;
+                tblc_currentHunger.Text = mHunger.ToString();
+                tblc_currentMoney.Text = mMoney.ToString();
+
+                CheckItemsAvailability();
             }
         }
 
-        private void btnBuyToy_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void btnBuyToy_Click(object sender, RoutedEventArgs e)
         {
-            if (money >= PriceToy)
+            if (mMoney >= mPriceToy)
             {
-                HapBonus += 1;
-                money -= PriceToy;
-                tblc_currentMoney.Text = "$: " + money;
+                mHappinessBonus += 1;
+                mMoney -= mPriceToy;
+                tblc_currentMoney.Text = mMoney.ToString();
 
-                if (HapBonus > 2)
+                if (mHappinessBonus > 2)
                 {
                     btn_BuyToy.Content = "Purchased";
                     btn_BuyToy.Background = Brushes.DodgerBlue;
                     btn_BuyToy.IsEnabled = false;
                 }
+
+                CheckItemsAvailability();
             }
         }
 
-        private void BtnBuyForage_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnBuyForage_Click(object sender, RoutedEventArgs e)
         {
-            if (money >= 10)
+            if (mMoney >= mPriceVegetables)
             {
                 btn_BuyForage.Background = Brushes.SteelBlue;
                 btn_BuyForage.Content = "Purchased";
-                HungerModifier -= 1;
-                money -= 10;
+                mHungerModifier -= 1;
+                mMoney -= mPriceVegetables;
                 btn_BuyForage.IsEnabled = false;
-                tblc_currentMoney.Text = "$: " + money;
+                tblc_currentMoney.Text = mMoney.ToString();
+
+                CheckItemsAvailability();
             }
         }
 
-        private void btnBuyFruit_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void btnBuyFruit_Click(object sender, RoutedEventArgs e)
         {
-            if (money >= PriceFood2)
+            if (mMoney >= mPriceFruits)
             {
-                hunger -= 2;
-                money -= PriceFood2;
-                tblc_currentMoney.Text = "$: " + money;
-                tblc_currentHunger.Text = "Hunger: " + hunger + "%";
+                mHunger -= 2;
+                mMoney -= mPriceFruits;
+                tblc_currentMoney.Text = mMoney.ToString();
+                tblc_currentHunger.Text = mHunger.ToString();
+
+                CheckItemsAvailability();
             }
         }
 
