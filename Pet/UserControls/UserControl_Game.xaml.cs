@@ -398,6 +398,5 @@ namespace Pet
                 CheckItemsAvailability();
             }
         }
-
     }
 }
