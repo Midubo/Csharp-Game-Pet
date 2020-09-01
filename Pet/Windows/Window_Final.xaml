@@ -1,12 +1,56 @@
 ﻿<Window x:Class="Pet.Window_Final"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Pet"
-        mc:Ignorable="d"
-        Title="Window_Final" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Window_Final" Height="250" Width="400"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        FontFamily="pack://application:,,,/#Kavivanar"
+        FontSize="30"
+        AllowsTransparency="True"
+        Background="Transparent"
+        >
+
+    <Border BorderBrush="DodgerBlue" BorderThickness="5" CornerRadius="10" Background="SkyBlue">
+        <Border BorderBrush="#FF00B5C5" BorderThickness="2" CornerRadius="10" Margin="1">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0.5, 0" EndPoint="0.5, 1">
+                    <GradientStop Color="AliceBlue" Offset="0.0"/>
+                    <GradientStop Color="AntiqueWhite" Offset="0.5"/>
+                    <GradientStop Color="AliceBlue" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Name="header" BorderBrush="#FF00B5C5" BorderThickness="5" CornerRadius="10" Background="LightGreen" Margin="0 0 0 5">
+                    <StackPanel Margin="10 0">
+                        <TextBlock Name="tblc_result" Text="You won!" HorizontalAlignment="Center" FontWeight="Bold" Width="Auto"/>
+                    </StackPanel>
+                </Border>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Final ♥: "/>
+
+                    <TextBlock Grid.Column="1" Name="tblc_Final" Text="tblc_Final"/>
+                </Grid>
+
+                <TextBlock Grid.Row="2" Name="tblc_comment" Text="tblc_comment"/>
+
+                <Button Grid.Row="3" Click="Button_Click" Content="✔" Width="75"/>
+
+            </Grid>
+        </Border>
+    </Border>
 </Window>

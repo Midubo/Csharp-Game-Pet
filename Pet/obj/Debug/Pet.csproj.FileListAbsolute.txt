@@ -22,6 +22,5 @@ D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet.csproj.CoreCompileInputs.cache
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet.exe
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Windows\Window_Menu.g.cs
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Windows\Window_Final.g.cs
-D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Pet_MarkupCompile.lref
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Windows\Window_Menu.baml
 D:\Nothing\VS 2019\WPF\Pet\obj\Debug\Windows\Window_Final.baml
