@@ -10,7 +10,7 @@
 
     <UserControl.Resources>
 
-        <Style TargetType="Button">
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Height" Value="40"/>
             <Setter Property="FontSize" Value="30"/>
             <Setter Property="MaxWidth" Value="225"/>

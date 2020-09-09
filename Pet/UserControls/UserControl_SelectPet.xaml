@@ -92,7 +92,7 @@
             <Setter Property="Stretch" Value="None" />
         </Style>
 
-        <Style TargetType="{x:Type Button}">
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Height" Value="35"/>
             <Setter Property="FontSize" Value="30"/>
             <Setter Property="MaxWidth" Value="225"/>

@@ -11,18 +11,6 @@
 
     <UserControl.Resources>
 
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="0 5 0 0"/>
-            <Setter Property="FontSize" Value="48"/>
-            <Setter Property="BorderThickness" Value="0"/>
-
-            <Style.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10"/>
-                </Style>
-            </Style.Resources>
-        </Style>
-
         <Style x:Key="ImageStackStyle" TargetType="{x:Type Image}">
             <Setter Property="Margin" Value="10,0"/>
         </Style>

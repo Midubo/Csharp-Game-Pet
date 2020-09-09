@@ -72,6 +72,10 @@
     <Compile Include="Windows\Window_Final.xaml.cs">
       <DependentUpon>Window_Final.xaml</DependentUpon>
     </Compile>
+    <Page Include="Styles\Buttons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\UserControl_SelectPet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -15,7 +15,7 @@
         Closed="Window_Closed">
 
     <Window.Resources>
-        <Style TargetType="{x:Type Button}">
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="FontSize" Value="30"/>
         </Style>
 

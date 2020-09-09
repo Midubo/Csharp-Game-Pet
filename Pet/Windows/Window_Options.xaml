@@ -11,7 +11,7 @@
         Background="Transparent">
 
     <Window.Resources>
-        <Style TargetType="{x:Type Button}">
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="FontSize" Value="22"/>
         </Style>
 
@@ -94,7 +94,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Column="0" Text="Default pet's name:"/>
-                    <TextBox Grid.Column="1" Name="tb_Name" Text="Rex" Margin="0 0 0 5"/>
+                    <TextBox Grid.Column="1" Name="tb_Name" Text="Rex" Margin="5 0 0 5"/>
                 </Grid>
 
                 <CheckBox Grid.Row="4" Name="checkBox_dailyComments" Margin="0 0 0 5">Daily comments</CheckBox>
