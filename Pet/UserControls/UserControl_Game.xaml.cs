@@ -47,25 +47,25 @@ namespace Pet
         string mPetName;
 
         /// <summary>
-        /// TODO: place in a database or a resx file
+        /// Comments from a resx file
         /// </summary>
         string[] mComments = {
-            "Your pet dreamt of you tonight.",
-            "Win more games to unlock other pets.",
-            "Consider taking a break.",
-            "The panda a secret pet.",
-            "You can always erase your statistics.",
-            "Your pet has met another pet for the first time",
-            "Your pet has woken up.",
-            "Your pet wants to go for a walk.",
-            "Your pet loves you.",
-            "A big bone is very useful if you're tired of feeding your pet.",
-            "Your pet... you will need a new jacket.",
-            "Never kick your pet.",
-            "The name is very important (e.g. a parrot called Rex is aggressive).",
-            "There is a little chance of getting the third choice every day",
-            "Dogs can understand up to 250 words!",
-            "Cats can run at 50 km per hour for some time!"
+            Properties.Resources.comment1,
+            Properties.Resources.comment2,
+            Properties.Resources.comment3,
+            Properties.Resources.comment4,
+            Properties.Resources.comment5,
+            Properties.Resources.comment6,
+            Properties.Resources.comment7,
+            Properties.Resources.comment8,
+            Properties.Resources.comment9,
+            Properties.Resources.comment10,
+            Properties.Resources.comment11,
+            Properties.Resources.comment12,
+            Properties.Resources.comment13,
+            Properties.Resources.comment14,
+            Properties.Resources.comment15,
+            Properties.Resources.comment16,
         };
 
         bool mDailyCommentsEnabled;
