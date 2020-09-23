@@ -16,15 +16,9 @@ namespace Pet
 
         private int mWins;
 
-        /// <summary>
-        /// The total number of days in the game by default. The game balance relies heavily on this. Cannot be negative.
-        /// </summary>
-        private int mTotalDays = 15;
-
-        private int mHungerModifier = 2, mHappiness = 15, mHappinessBonus = 0, mHunger;
-        string mPetName;
-
         private MediaPlayer mediaPlayer = new MediaPlayer();
+
+        private SinglePet mSinglePet = new SinglePet();
 
         #endregion
 
@@ -177,7 +171,7 @@ namespace Pet
         {
             if (tb_Name.Text.Length > 0)
             {
-                mPetName = tb_Name.Text;
+                mSinglePet.petName = tb_Name.Text;
                 string pet = "";
 
                 string description = "";
@@ -188,26 +182,26 @@ namespace Pet
                 }
                 else if (choiceKitty.IsChecked == true)
                 {
-                    mTotalDays += 1;
+                    mSinglePet.totalDays += 1;
                     pet = "kitty";
                     description += "+1 Day";
                 }
                 else if (choiceParrot.IsChecked == true)
                 {
-                    mHungerModifier -= 1;
+                    mSinglePet.hungerModifier -= 1;
                     pet = "parrot";
                     description += "Hunger 50% weaker";
                 }
                 else if (choiceHamster.IsChecked == true)
                 {
-                    mHappiness += 10;
-                    mTotalDays -= 1;
+                    mSinglePet.happiness += 10;
+                    mSinglePet.totalDays -= 1;
                     pet = "hamster";
                     description += "+10 ♥, -1 Day";
                 }
                 else if (choicePanda.IsChecked == true)
                 {
-                    mHappinessBonus += 1;
+                    mSinglePet.happinessBonus += 1;
                     pet = "panda";
                     description += "+1 ♥ every day";
                 }
@@ -216,8 +210,8 @@ namespace Pet
 
                 if (AgeChoice1.IsChecked == true)
                 {
-                    mTotalDays += 1;
-                    mHunger += 1;
+                    mSinglePet.totalDays += 1;
+                    mSinglePet.hunger += 1;
                     age += "1 month";
                 }
                 else if (AgeChoice2.IsChecked == true)
@@ -226,8 +220,8 @@ namespace Pet
                 }
                 else if (AgeChoice3.IsChecked == true)
                 {
-                    mTotalDays -= 1;
-                    mHappiness++;
+                    mSinglePet.totalDays -= 1;
+                    mSinglePet.happiness++;
                     age += "12 months";
                 }
 
@@ -235,7 +229,13 @@ namespace Pet
 
                 mediaPlayer.Stop();
 
-                (Parent as Window).Content = new UserControl_Game(mPetName, mTotalDays, mHappiness, mHappinessBonus, mHunger, mHungerModifier, pet, description, age, description_age);
+                mSinglePet.pet = pet;
+                mSinglePet.petDescription = description;
+                mSinglePet.age = age;
+                mSinglePet.ageDescription = description_age;
+
+
+                (Parent as Window).Content = new UserControl_Game(mSinglePet);
             }
             else
                 tblc_WarningName.Visibility = Visibility.Visible;

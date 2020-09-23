@@ -80,7 +80,7 @@
                     <Button Grid.Row="0" Content="PLAY" Click="btn_Play_Click" Background="SkyBlue"/>
                     <Button Grid.Row="1" Content="OPTIONS" Click="btn_Options_Click" Background="LightGreen"/>
                     <Button Grid.Row="2" Content="ABOUT" Click="btn_Website_Click" ToolTip="{Binding ElementName=link, Path=NavigateUri}" Background="#ffe868"/>
-                    <Button Grid.Row="3" Content="BYE" Click="btn_Exit_Click" ToolTip="Exit" Background="Coral"/>
+                    <Button Grid.Row="3" Content="EXIT" Click="btn_Exit_Click" ToolTip="Goodbye" Background="Coral"/>
                 </Grid>
 
                 <Border Grid.Column="1" BorderBrush="DodgerBlue" BorderThickness="5" CornerRadius="10" Background="DarkTurquoise">

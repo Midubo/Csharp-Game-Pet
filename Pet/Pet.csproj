@@ -57,6 +57,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Animal.cs" />
+    <Compile Include="SinglePet.cs" />
     <Compile Include="UserControls\UserControl_MainMenu.xaml.cs">
       <DependentUpon>UserControl_MainMenu.xaml</DependentUpon>
     </Compile>
