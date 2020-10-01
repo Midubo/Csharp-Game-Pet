@@ -29,6 +29,11 @@ namespace Pet
         int mPriceBone = 14, mPriceToy = 4, mPriceVegetables = 10, mPriceFruits = 2;
 
         /// <summary>
+        /// Indicates whether item "Vegetables" was purchased
+        /// </summary>
+        bool mVegetablesPurchased = false;
+
+        /// <summary>
         /// Indicates whether item "Big Bone" was purchased
         /// </summary>
         bool mBigBonePurchased = false;
@@ -71,7 +76,7 @@ namespace Pet
 
         #region LOADING
 
-        public UserControl_Game(SinglePet singlePet)
+        public UserControl_Game(SinglePet singlePet, int coins = 1, int freeHours = 1, int currentDay = 1, bool vegetablesPurchased = false, bool bigBonePurchased = false, bool dailyChoice3Available = false)
         {
             InitializeComponent();
 
@@ -93,8 +98,21 @@ namespace Pet
                 mediaPlayer.Play();
             }
 
-            // Show buttons to buy items the can be afforded
+            mMoney = coins;
+            mFreeHours = freeHours;
+            mCurrentDay = currentDay;
+            mVegetablesPurchased = vegetablesPurchased;
+            mBigBonePurchased = bigBonePurchased;
+
+            mDailyChoice3Available = dailyChoice3Available;
+
+            if (mDailyChoice3Available)
+                DailyChoice3.Visibility = Visibility.Visible;
+
+            // Show buttons to buy items that can be afforded
             CheckItemsAvailability();
+
+            pb_days.Value = ((double)mCurrentDay / mSinglePet.totalDays) * 100;
         }
 
         private void Media_Ended(object sender, EventArgs e)
@@ -162,7 +180,7 @@ namespace Pet
             this.Opacity = 0.4;
             this.Effect = new BlurEffect();
 
-            Window_Menu w = new Window_Menu()
+            Window_Menu w = new Window_Menu(mSinglePet, mMoney, mFreeHours, mCurrentDay, mVegetablesPurchased, mBigBonePurchased, mDailyChoice3Available)
             {
                 Owner = this.Parent as Window,
                 ShowInTaskbar = false
@@ -290,19 +308,46 @@ namespace Pet
 
         void CheckItemsAvailability()
         {
-            btn_BuyBone.Visibility = btn_BuyToy.Visibility = btn_BuyForage.Visibility = btn_BuyFruit.Visibility = Visibility.Hidden;
-
-            if (mMoney >= mPriceBone)
-                btn_BuyBone.Visibility = Visibility.Visible;
-
-            if (mMoney >= mPriceToy)
-                btn_BuyToy.Visibility = Visibility.Visible;
-
-            if (mMoney >= mPriceVegetables)
-                btn_BuyForage.Visibility = Visibility.Visible;
+            btn_BuyBone.Visibility = btn_BuyToy.Visibility = btn_BuyVegetables.Visibility = btn_BuyFruit.Visibility = Visibility.Hidden;
 
             if (mMoney >= mPriceFruits)
                 btn_BuyFruit.Visibility = Visibility.Visible;
+
+            if (mMoney >= mPriceToy || mSinglePet.happinessBonus > 2)
+            {
+                btn_BuyToy.Visibility = Visibility.Visible;
+
+                if (mSinglePet.happinessBonus > 2)
+                {
+                    btn_BuyToy.IsEnabled = false;
+                    btn_BuyToy.Content = "Purchased";
+                }
+            }
+
+            if (mMoney >= mPriceVegetables || mVegetablesPurchased)
+            {
+                btn_BuyVegetables.Visibility = Visibility.Visible;
+
+                if (mVegetablesPurchased)
+                {
+                    btn_BuyVegetables.IsEnabled = false;
+                    btn_BuyVegetables.Content = "Purchased";
+                }
+            }
+
+            if (mMoney >= mPriceBone || mBigBonePurchased)
+            {
+                btn_BuyBone.Visibility = Visibility.Visible;
+
+                if (mBigBonePurchased)
+                {
+                    btn_BuyBone.IsEnabled = false;
+                    btn_BuyBone.Content = "Purchased";
+                }
+            }
+
+            tblc_currentMoney.Text = mMoney.ToString();
+            tblc_currentHunger.Text = mSinglePet.hunger.ToString();
         }
 
         void Final()
@@ -325,68 +370,40 @@ namespace Pet
             RestartGame();
         }
 
-        private void BtnBuyBone_Click(object sender, RoutedEventArgs e)
+        private void btnBuyFruit_Click(object sender, RoutedEventArgs e)
         {
-            if (mBigBonePurchased == false && mMoney >= mPriceBone)
-            {
-                btn_BuyBone.Background = Brushes.DeepSkyBlue;
-                btn_BuyBone.Content = "Purchased";
-                mBigBonePurchased = true;
-                mSinglePet.hunger = 0;
-                mMoney -= mPriceBone;
-                btn_BuyBone.IsEnabled = false;
-                tblc_currentHunger.Text = mSinglePet.hunger.ToString();
-                tblc_currentMoney.Text = mMoney.ToString();
+            mMoney -= mPriceFruits;
+            mSinglePet.hunger -= 2;
 
-                CheckItemsAvailability();
-            }
+            CheckItemsAvailability();
         }
 
         private void btnBuyToy_Click(object sender, RoutedEventArgs e)
         {
-            if (mMoney >= mPriceToy)
-            {
-                mSinglePet.happinessBonus += 1;
-                mMoney -= mPriceToy;
-                tblc_currentMoney.Text = mMoney.ToString();
+            mMoney -= mPriceToy;
+            mSinglePet.happinessBonus += 1;
 
-                if (mSinglePet.happinessBonus > 2)
-                {
-                    btn_BuyToy.Content = "Purchased";
-                    btn_BuyToy.Background = Brushes.DodgerBlue;
-                    btn_BuyToy.IsEnabled = false;
-                }
-
-                CheckItemsAvailability();
-            }
+            CheckItemsAvailability();
         }
 
-        private void BtnBuyForage_Click(object sender, RoutedEventArgs e)
+        private void BtnBuyVegetables_Click(object sender, RoutedEventArgs e)
         {
-            if (mMoney >= mPriceVegetables)
-            {
-                btn_BuyForage.Background = Brushes.SteelBlue;
-                btn_BuyForage.Content = "Purchased";
-                mSinglePet.hungerModifier -= 1;
-                mMoney -= mPriceVegetables;
-                btn_BuyForage.IsEnabled = false;
-                tblc_currentMoney.Text = mMoney.ToString();
+            mVegetablesPurchased = true;
 
-                CheckItemsAvailability();
-            }
+            mMoney -= mPriceVegetables;
+            mSinglePet.hungerModifier -= 1;
+
+            CheckItemsAvailability();
         }
 
-        private void btnBuyFruit_Click(object sender, RoutedEventArgs e)
+        private void BtnBuyBone_Click(object sender, RoutedEventArgs e)
         {
-            if (mMoney >= mPriceFruits)
-            {
-                mSinglePet.hunger -= 2;
-                mMoney -= mPriceFruits;
-                tblc_currentMoney.Text = mMoney.ToString();
-                tblc_currentHunger.Text = mSinglePet.hunger.ToString();
+            mBigBonePurchased = true;
 
-                CheckItemsAvailability();
-            }
+            mMoney -= mPriceBone;
+            mSinglePet.hunger = 0;
+
+            CheckItemsAvailability();
         }
     }
 }

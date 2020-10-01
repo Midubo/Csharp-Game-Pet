@@ -1,7 +1,8 @@
 ﻿<Window x:Class="Pet.Window_Menu"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Options" Height="290" Width="400"
+        Title="Options" Width="400"
+        SizeToContent="Height"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -70,18 +71,13 @@
                 </LinearGradientBrush>
             </Border.Background>
 
-            <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+            <StackPanel Margin="10">
 
-                <Button Grid.Row="0" Click="Button_Continue" Content="Continue"/>
+                <Button Click="Button_Continue" Content="Continue"/>
 
-                <Button Grid.Row="1" Name="btn_Restart" Click="btn_Restart_Click" ToolTip="Restart the game">
+                <Button Click="Button_Save" Content="Save"/>
+
+                <Button Name="btn_Restart" Click="btn_Restart_Click" ToolTip="Restart the game">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -94,14 +90,14 @@
                     </Grid>
                 </Button>
 
-                <Button Grid.Row="2" Name="btn_MainMenu" Click="btn_MainMenu_Click" ToolTip="Return to Main Menu">
+                <Button Name="btn_MainMenu" Click="btn_MainMenu_Click" ToolTip="Return to Main Menu">
                     <TextBlock VerticalAlignment="Center" Text="Main Menu"/>
                 </Button>
 
-                <Button Grid.Row="3" Click="Button_Exit" Content="Exit Game"/>
+                <Button Click="Button_Exit" Content="Exit Game"/>
 
-                <CheckBox Grid.Row="4" Name="checkBox_Music"  Margin="0 0 0 5" Content="Music"/>
-            </Grid>
+                <CheckBox Name="checkBox_Music"  Margin="0 5" Content="Music"/>
+            </StackPanel>
         </Border>
     </Border>
 </Window>

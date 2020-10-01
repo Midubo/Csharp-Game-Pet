@@ -233,20 +233,20 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" VerticalAlignment="Top">
-                            <Run FontWeight="Bold">A big bone</Run>:
+                            <Run FontWeight="Bold">Fruits</Run>:
                                 <LineBreak/>
-                            <Run BaselineAlignment="Center">Price: 14</Run><Image Source="pack://application:,,,/Images/coin.png" Width="32" Height="32" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/>
+                            <Run BaselineAlignment="Center">Price: 2</Run><Image Source="pack://application:,,,/Images/coin.png" Width="32" Height="32" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/>
                         </TextBlock>
 
-                        <Image Grid.Column="1" Source="pack://application:,,,/Images/big-bone.png" Height="48" Width="48" VerticalAlignment="Top"/>
+                        <Image Grid.Column="1" Source="pack://application:,,,/Images/fruits.png" Height="48" Width="48" VerticalAlignment="Top"/>
 
                     </Grid>
 
                     <TextBlock Grid.Row="1">
-                        <Run BaselineAlignment="Center">Effect: no more</Run><Image Source="pack://application:,,,/Images/hunger.png" Height="32" Width="32" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/>
+                        <Run BaselineAlignment="Center">Effect: -2</Run><Image Source="pack://application:,,,/Images/hunger.png" Height="32" Width="32" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/>
                     </TextBlock>
 
-                    <Button Grid.Row="2" Name="btn_BuyBone" Click="BtnBuyBone_Click">
+                    <Button Grid.Row="2" Name="btn_BuyFruit" Click="btnBuyFruit_Click">
                         <TextBlock VerticalAlignment="Center" Text="Buy"/>
                     </Button>
                 </Grid>
@@ -310,7 +310,7 @@
                        <Run BaselineAlignment="Center">Effect:</Run><Image Source="pack://application:,,,/Images/hunger.png" Height="32" Width="32" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/><Run BaselineAlignment="Center">is weaker</Run>
                     </TextBlock>
 
-                    <Button Grid.Row="2" Name="btn_BuyForage" Click="BtnBuyForage_Click">
+                    <Button Grid.Row="2" Name="btn_BuyVegetables" Click="BtnBuyVegetables_Click">
                         <TextBlock VerticalAlignment="Center" Text="Buy"/>
                     </Button>
                 </Grid>
@@ -329,20 +329,20 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" VerticalAlignment="Top">
-                            <Run FontWeight="Bold">Fruits</Run>:
+                            <Run FontWeight="Bold">A big bone</Run>:
                                 <LineBreak/>
-                            <Run BaselineAlignment="Center">Price: 2</Run><Image Source="pack://application:,,,/Images/coin.png" Width="32" Height="32" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/>
+                            <Run BaselineAlignment="Center">Price: 14</Run><Image Source="pack://application:,,,/Images/coin.png" Width="32" Height="32" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/>
                         </TextBlock>
 
-                        <Image Grid.Column="1" Source="pack://application:,,,/Images/fruits.png" Height="48" Width="48" VerticalAlignment="Top"/>
+                        <Image Grid.Column="1" Source="pack://application:,,,/Images/big-bone.png" Height="48" Width="48" VerticalAlignment="Top"/>
 
                     </Grid>
 
                     <TextBlock Grid.Row="1">
-                        <Run BaselineAlignment="Center">Effect: -2</Run><Image Source="pack://application:,,,/Images/hunger.png" Height="32" Width="32" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/>
+                        <Run BaselineAlignment="Center">Effect: no more</Run><Image Source="pack://application:,,,/Images/hunger.png" Height="32" Width="32" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="Fill"/>
                     </TextBlock>
 
-                    <Button Grid.Row="2" Name="btn_BuyFruit" Click="btnBuyFruit_Click">
+                    <Button Grid.Row="2" Name="btn_BuyBone" Click="BtnBuyBone_Click">
                         <TextBlock VerticalAlignment="Center" Text="Buy"/>
                     </Button>
                 </Grid>

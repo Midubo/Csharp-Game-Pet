@@ -1,6 +1,7 @@
 ﻿using Pet.Properties;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,6 +33,9 @@ namespace Pet
             {
                 mediaPlayer.Play();
             }
+
+            if (File.Exists($"{Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}\\save.sav"))
+                btn_Load.IsEnabled = true;
         }
 
         private void Media_Ended(object sender, EventArgs e)
@@ -98,9 +102,35 @@ namespace Pet
             e.Handled = true;
         }
 
-        private void btn_Website_Click(object sender, RoutedEventArgs e)
+        private void btn_Load_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(link.NavigateUri.AbsoluteUri));
+            SinglePet singlePet = new SinglePet();
+
+            string[] lines = File.ReadAllLines($"{Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}\\save.sav");
+
+            singlePet.petName = lines[0];
+            singlePet.totalDays = Convert.ToInt32(lines[1]);
+            singlePet.happiness = Convert.ToInt32(lines[2]);
+            singlePet.happinessBonus = Convert.ToInt32(lines[3]);
+            singlePet.hunger = Convert.ToInt32(lines[4]);
+            singlePet.hungerModifier = Convert.ToInt32(lines[5]);
+            singlePet.pet = lines[6];
+            singlePet.petDescription = lines[7];
+            singlePet.age = lines[8];
+            singlePet.ageDescription = lines[9];
+
+            mediaPlayer.Stop();
+
+            (Parent as Window).Content = new UserControl_Game(singlePet,
+                Convert.ToInt32(lines[10]),
+                Convert.ToInt32(lines[11]),
+                Convert.ToInt32(lines[12]),
+
+                Convert.ToBoolean(lines[13]),
+                Convert.ToBoolean(lines[14]),
+
+                Convert.ToBoolean(lines[15])
+                );
         }
     }
 }
