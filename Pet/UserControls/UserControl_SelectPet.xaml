@@ -213,7 +213,9 @@
                                     </RadioButton.Content>
                                 </RadioButton>
 
-                                <TextBlock>No effect</TextBlock>
+                                <TextBlock>
+                                    <Run Foreground="#5ed836" FontWeight="Bold">+5 ♥</Run>
+                                </TextBlock>
                             </StackPanel>
 
                             <TextBlock Grid.Column="1" Text="3 WINS" HorizontalAlignment="Center" FontSize="18" Foreground="Red" FontWeight="Bold">

@@ -11,25 +11,25 @@ namespace Pet
 
         #region Private members
 
-        private SinglePet mSinglePet;
+        private readonly SinglePet mSinglePet;
 
-        private int mCoins;
+        private readonly int mCoins;
 
-        private int mFreeHours;
+        private readonly int mFreeHours;
 
-        private int mCurrentDay;
+        private readonly int mCurrentDay;
 
         /// <summary>
         /// Indicates whether item "Vegetables" was purchased
         /// </summary>
-        private bool mVegetablesPurchased;
+        private readonly bool mVegetablesPurchased;
 
         /// <summary>
         /// Indicates whether item "Big Bone" was purchased
         /// </summary>
-        private bool mBigBonePurchased;
+        private readonly bool mBigBonePurchased;
 
-        private bool mDailyChoice3Available;
+        private readonly bool mDailyChoice3Available;
 
         #endregion
 

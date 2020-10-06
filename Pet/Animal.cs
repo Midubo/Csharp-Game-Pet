@@ -31,6 +31,10 @@ namespace Pet
         public int Days { get; set; }
 
         public int StartHunger { get; set; }
+
+        /// <summary>
+        /// Amount of bonus happiness added at the start of the game.
+        /// </summary>
         public int StartHappiness { get; set; }
 
         public int DailyHappy { get; set; }
@@ -45,9 +49,9 @@ namespace Pet
             {
                 Days = 0;
                 DailyHunger = 0;
-                StartHappiness = 0;
+                StartHappiness = 5;
                 DailyHappy = 0;
-                Special = "None";
+                Special = $"+{ StartHappiness } ♥";
                 ImageSource = "pack://application:,,,/Images/puppy.png";
                 Description = "Puppy! Cute, loyal and playful! And clever, too: dogs understand up to 250 words, and even a small puppy is a great weather forecaster. As a bonus, you will switch from walking to running: the fastest dog runs at the speed of 67.32 km per hour. When you get a puppy, you get a friend for a long time: some dogs live up to 30 years old. Puppies start seeing as adult dogs only after a month. Did you know? While puppies have 28 teeth, dogs have 42! And remember: chocolate is a great danger to any dog!";
             }
@@ -59,7 +63,7 @@ namespace Pet
                 DailyHappy = 0;
                 Special = "+1 Day";
                 ImageSource = "pack://application:,,,/Images/kitty.png";
-                Description = "Meow here, meow there - kitty goes everywhere. Keep an eye on that soft ball, feed it but not too much - big bossy lazy cats go nowhere: 2/3 of a day they sleep. Energetic cats can run at 50 km per hour for some time. A cat will run even faster if you try to wash a cat. Cats meow only to talk to people, they don't meow with other cats. Your kitty is talking to you! Give your kitten something tasty and put it a bit aside because cats often don't see near objects. When you kitty turns into a cat, you will see that the eye color is different!";
+                Description = "Meow here, meow there - kitty goes everywhere. Keep an eye on that soft ball, feed it but not too much - big bossy lazy cats go nowhere: 2/3 of a day they sleep. Energetic cats can run at 50 km per hour for some time. Cats will run even faster if you try to wash them. Cats meow only to talk to people, they don't meow with other cats. Your kitty is talking to you! Give your kitten something tasty and put it a bit aside because cats often don't see near objects. When your kitty turns into a cat, you will see that the eye color is different!";
             }
             else if (type == PetType.Parrot)
             {

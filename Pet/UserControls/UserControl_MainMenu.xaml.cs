@@ -17,7 +17,7 @@ namespace Pet
     {
         void IDisposable.Dispose() { }
 
-        private MediaPlayer mediaPlayer = new MediaPlayer();
+        private readonly MediaPlayer mMediaPlayer = new MediaPlayer();
 
         public UserControl_MainMenu()
         {
@@ -26,12 +26,12 @@ namespace Pet
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
             tblc_version.Text += string.Format(" - Version {0}.{1}.{2}", version.Major, version.Minor, version.Build);
 
-            mediaPlayer.Open(new Uri(string.Format("{0}\\Robot_Boogie.mp3", AppDomain.CurrentDomain.BaseDirectory)));
-            mediaPlayer.MediaEnded += new EventHandler(Media_Ended);
+            mMediaPlayer.Open(new Uri(string.Format("{0}\\Robot_Boogie.mp3", AppDomain.CurrentDomain.BaseDirectory)));
+            mMediaPlayer.MediaEnded += new EventHandler(Media_Ended);
 
             if ((bool)Settings.Default["music"] == true)
             {
-                mediaPlayer.Play();
+                mMediaPlayer.Play();
             }
 
             if (File.Exists($"{Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}\\save.sav"))
@@ -42,14 +42,14 @@ namespace Pet
         {
             if ((bool)Settings.Default["music"] == true)
             {
-                mediaPlayer.Position = TimeSpan.Zero;
-                mediaPlayer.Play();
+                mMediaPlayer.Position = TimeSpan.Zero;
+                mMediaPlayer.Play();
             }
         }
 
         private void btn_Play_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            mediaPlayer.Stop();
+            mMediaPlayer.Stop();
             (Parent as Window).Content = new UserControl_SelectPet();
         }
 
@@ -71,12 +71,12 @@ namespace Pet
 
             if ((bool)Settings.Default["music"] == false)
             {
-                mediaPlayer.Stop();
+                mMediaPlayer.Stop();
             }
             else
             {
-                mediaPlayer.Position = TimeSpan.Zero;
-                mediaPlayer.Play();
+                mMediaPlayer.Position = TimeSpan.Zero;
+                mMediaPlayer.Play();
             }
 
             if ((bool)Settings.Default["windowed"] == false)
@@ -119,7 +119,7 @@ namespace Pet
             singlePet.age = lines[8];
             singlePet.ageDescription = lines[9];
 
-            mediaPlayer.Stop();
+            mMediaPlayer.Stop();
 
             (Parent as Window).Content = new UserControl_Game(singlePet,
                 Convert.ToInt32(lines[10]),

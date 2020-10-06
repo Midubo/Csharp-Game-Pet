@@ -15,39 +15,39 @@ namespace Pet
     {
         void IDisposable.Dispose() { }
 
-        #region VARIABLES
+        #region Private members
 
-        int mCurrentDay = 1, mMoney = 1;
+        private int mCurrentDay = 1, mMoney = 1;
 
         /// <summary>
         /// The number of free hours available. Cannot be negative.
         /// </summary>
-        int mFreeHours = 1;
+        private int mFreeHours = 1;
 
-        int mWins = 0, mHappinessforWalk = 13;
+        private const int mHappinessforWalk = 13;
 
-        int mPriceBone = 14, mPriceToy = 4, mPriceVegetables = 10, mPriceFruits = 2;
+        private const int mPriceBone = 14, mPriceToy = 4, mPriceVegetables = 10, mPriceFruits = 2;
 
         /// <summary>
         /// Indicates whether item "Vegetables" was purchased
         /// </summary>
-        bool mVegetablesPurchased = false;
+        private bool mVegetablesPurchased = false;
 
         /// <summary>
         /// Indicates whether item "Big Bone" was purchased
         /// </summary>
-        bool mBigBonePurchased = false;
+        private bool mBigBonePurchased = false;
 
-        bool mDailyChoice3Available = false;
+        private bool mDailyChoice3Available = false;
 
-        Queue qu = new Queue();
+        private readonly Queue qu = new Queue();
 
-        Random rnd = new Random();
+        private Random rnd = new Random();
 
         /// <summary>
         /// Comments from a resx file
         /// </summary>
-        string[] mComments = {
+        private readonly string[] mComments = {
             Properties.Resources.comment1,
             Properties.Resources.comment2,
             Properties.Resources.comment3,
@@ -66,11 +66,11 @@ namespace Pet
             Properties.Resources.comment16,
         };
 
-        bool mDailyCommentsEnabled;
+        private bool mDailyCommentsEnabled;
 
-        private MediaPlayer mediaPlayer = new MediaPlayer();
+        private readonly MediaPlayer mMediaPlayer = new MediaPlayer();
 
-        private SinglePet mSinglePet;
+        private readonly SinglePet mSinglePet;
 
         #endregion
 
@@ -91,11 +91,11 @@ namespace Pet
             ImageSourceConverter imgs = new ImageSourceConverter();
             img_Pet.SetValue(Image.SourceProperty, imgs.ConvertFromString(string.Format("pack://application:,,,/Images/{0}.png", mSinglePet.pet)));
 
-            mediaPlayer.Open(new Uri(string.Format("{0}\\Rainbow_Forest.mp3", AppDomain.CurrentDomain.BaseDirectory)));
-            mediaPlayer.MediaEnded += new EventHandler(Media_Ended);
+            mMediaPlayer.Open(new Uri(string.Format("{0}\\Rainbow_Forest.mp3", AppDomain.CurrentDomain.BaseDirectory)));
+            mMediaPlayer.MediaEnded += new EventHandler(Media_Ended);
             if ((bool)Settings.Default["music"] == true)
             {
-                mediaPlayer.Play();
+                mMediaPlayer.Play();
             }
 
             mMoney = coins;
@@ -119,15 +119,13 @@ namespace Pet
         {
             if ((bool)Settings.Default["music"] == true)
             {
-                mediaPlayer.Position = TimeSpan.Zero;
-                mediaPlayer.Play();
+                mMediaPlayer.Position = TimeSpan.Zero;
+                mMediaPlayer.Play();
             }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            mWins = (int)Settings.Default["wins"];
-
             #region writing daily comments
 
             mDailyCommentsEnabled = (bool)Settings.Default["dailyComments"];
@@ -171,7 +169,7 @@ namespace Pet
 
         void RestartGame()
         {
-            mediaPlayer.Stop();
+            mMediaPlayer.Stop();
             (Parent as Window).Content = new UserControl_SelectPet();
         }
 
@@ -195,12 +193,12 @@ namespace Pet
 
                 if ((bool)Settings.Default["music"] == false)
                 {
-                    mediaPlayer.Stop();
+                    mMediaPlayer.Stop();
                 }
                 else
                 {
-                    mediaPlayer.Position = TimeSpan.Zero;
-                    mediaPlayer.Play();
+                    mMediaPlayer.Position = TimeSpan.Zero;
+                    mMediaPlayer.Play();
                 }
 
                 if (command == "restart")
@@ -209,7 +207,7 @@ namespace Pet
                 }
                 else if (command == "mainmenu")
                 {
-                    mediaPlayer.Stop();
+                    mMediaPlayer.Stop();
                     (Parent as Window).Content = new UserControl_MainMenu();
                 }
                 else

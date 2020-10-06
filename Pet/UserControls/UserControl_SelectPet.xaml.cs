@@ -16,9 +16,9 @@ namespace Pet
 
         private int mWins;
 
-        private MediaPlayer mediaPlayer = new MediaPlayer();
+        private readonly MediaPlayer mMediaPlayer = new MediaPlayer();
 
-        private SinglePet mSinglePet = new SinglePet();
+        private readonly SinglePet mSinglePet = new SinglePet();
 
         #endregion
 
@@ -36,13 +36,13 @@ namespace Pet
             AgeChoice2.Checked += AgeChoice_CheckedChanged;
             AgeChoice3.Checked += AgeChoice_CheckedChanged;
 
-            mediaPlayer.Open(new Uri(string.Format("{0}\\Run_Little_Chicken.mp3", AppDomain.CurrentDomain.BaseDirectory)));
+            mMediaPlayer.Open(new Uri(string.Format("{0}\\Run_Little_Chicken.mp3", AppDomain.CurrentDomain.BaseDirectory)));
 
-            mediaPlayer.MediaEnded += new EventHandler(Media_Ended);
+            mMediaPlayer.MediaEnded += new EventHandler(Media_Ended);
 
             if ((bool)Settings.Default["music"] == true)
             {
-                mediaPlayer.Play();
+                mMediaPlayer.Play();
             }
 
             DataContext = this;
@@ -52,9 +52,9 @@ namespace Pet
         {
             if ((bool)Settings.Default["music"] == true)
             {
-                mediaPlayer.Position = TimeSpan.Zero;
+                mMediaPlayer.Position = TimeSpan.Zero;
 
-                mediaPlayer.Play();
+                mMediaPlayer.Play();
             }
         }
 
@@ -177,6 +177,8 @@ namespace Pet
                 string description = "";
                 if (choicePuppy.IsChecked == true)
                 {
+                    mSinglePet.happiness += SelectedPet.StartHappiness;
+
                     pet = "puppy";
                     description += "None";
                 }
@@ -227,7 +229,7 @@ namespace Pet
 
                 string description_age = tblc_Effect.Text.Replace("\n", ", ");
 
-                mediaPlayer.Stop();
+                mMediaPlayer.Stop();
 
                 mSinglePet.pet = pet;
                 mSinglePet.petDescription = description;
@@ -245,7 +247,7 @@ namespace Pet
 
         private void btn_Restart_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.Stop();
+            mMediaPlayer.Stop();
             RestartGame();
         }
 
@@ -258,7 +260,7 @@ namespace Pet
 
         private void btn_MainMenu_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.Stop();
+            mMediaPlayer.Stop();
             (Parent as Window).Content = new UserControl_MainMenu();
         }
 
